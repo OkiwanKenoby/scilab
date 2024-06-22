@@ -1,6 +1,32 @@
 clc // effacer la console scilab
 clear // effacer les données : equivalent scilab de clear all
 
+function y=f_permut (M) ; // M est une matrice .
+    [ r , c ]= size (M) ; // r : nombre de lignes , c , de colonnes
+    A=(c +1)*ones ( r , 1 ) ; // Colonne de ( c+1) a r lignes .
+    y = [];
+    for j= 0:c
+        B=[M( : , 1 : j ) ,A, M( : , j+1 :c ) ] ; // Matrice a r lignes , c+1 colonnes :
+        //on a intercale A au debut , entre les colonnes , a la fin .
+        y= [y ; B];
+        //disp('aB=');disp(B) ;
+    end
+endfunction
+
+function liste_permut ( n ) ; // n est un entier >0.
+    tic ( ) ;
+    M= [ 1 ] ;
+    for j=1 :n-1
+       // disp('j='+string(j))
+        M=f_permut (M) ;
+    end ;
+    temps=toc ( ) ;
+    disp(M) ;
+    disp('La duree du  calcul ,en secondes, est '+string ( temps ) );
+    disp('il y a '+string(factorial(n))+' permutation');
+endfunction
+
+
 function Z=Operation (Resultat, operation, terme) ;
     if (operation == 0) then
         Z = Resultat ;
